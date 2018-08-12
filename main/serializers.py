@@ -21,3 +21,8 @@ class CityAbstractSerializer(serializers.ModelSerializer):
 # serializer class for Abstract Country model
 class CitySelectorSerializer(serializers.Serializer):
     city_id = serializers.IntegerField()
+
+class AdvertiseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Advertisment
+        fields = '__all__'

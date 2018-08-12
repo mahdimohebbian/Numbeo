@@ -14,6 +14,8 @@ class Country(models.Model):
     avg_health_care = models.TextField()
     avg_pollution = models.TextField()
     avg_traffic = models.TextField()
+    def __str__(self):
+        return " {} ".format(self.name)
 
 
 class City(models.Model):
@@ -28,3 +30,13 @@ class City(models.Model):
     health_care = models.TextField()
     pollution = models.TextField()
     traffic = models.TextField()
+    def __str__(self):
+        return " {} : {} ".format(self.country.name,self.name)
+
+
+class Advertisment(models.Model):
+    img = models.ImageField()
+    describe = models.TextField(default=" your advertisment here !")
+    link = models.TextField(default="www.google.com")
+    def __str__(self):
+        return self.img.__str__() + " - " + self.describe

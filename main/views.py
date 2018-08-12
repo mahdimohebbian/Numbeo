@@ -243,29 +243,11 @@ class AverageRentAPIView(APIView):
         pass
 
     def post(self, request):
-        country_name = request.data['country']
-        country = models.Country.objects.get(name=country_name)
-        cities = models.City.objects.filter(country=country)
+        country_id = int(request.data["country_id"])
+        country = models.Country.objects.get(id=country_id)
+        result_data = ast.literal_eval(country.avg_rent)
 
-        # the data receiving process 
-        num_of_cities = len(cities)
-        base_data = ast.literal_eval(cities[0].rent)
-        for i in range(1, len(cities)):
-            main_city_dict = ast.literal_eval(cities[i].rent)
-            keys = main_city_dict.keys()
-            for key in keys:
-                keys2 = main_city_dict[key].keys()
-                for key2 in keys2:
-                    base_data[key][key2] = str(float(main_city_dict[key][key2]) + float(base_data[key][key2]))
-
-        # baraie taqsim kardane nataieje hasel jaam be tedad
-        keys = base_data.keys()
-        for key in keys:
-            keys2 = base_data[key].keys()
-            for key2 in keys2:
-                base_data[key][key2] = str(float(base_data[key][key2]) / num_of_cities)
-
-        return Response({country_name.__str__(): base_data}, status=status.HTTP_200_OK)
+        return Response(result_data,status=status.HTTP_200_OK)
 
 
 class AverageCostAPIView(APIView):
@@ -273,39 +255,11 @@ class AverageCostAPIView(APIView):
         pass
 
     def post(self, request):
-        country_name = request.data['country']
-        country = models.Country.objects.get(name=country_name)
-        cities = models.City.objects.filter(country=country)
+        country_id = int(request.data["country_id"])
+        country = models.Country.objects.get(id=country_id)
+        result_data = ast.literal_eval(country.avg_cost)
 
-        # the data receiving process 
-        num_of_cities = len(cities)
-
-        if cities[0].cost:
-            base_data = ast.literal_eval(cities[0].cost)
-        else:
-            base_data = {}
-
-        # base_data = ast.literal_eval(cities[0].cost)
-        for i in range(1, len(cities)):
-            if cities[i].cost:
-                main_city_dict = ast.literal_eval(cities[i].cost)
-            else:
-                main_city_dict = {}
-            # main_city_dict = ast.literal_eval(cities[i].cost)
-            keys = main_city_dict.keys()
-            for key in keys:
-                keys2 = main_city_dict[key].keys()
-                for key2 in keys2:
-                    base_data[key][key2] = str(float(main_city_dict[key][key2]) + float(base_data[key][key2]))
-
-        # baraie taqsim kardane nataieje hasel jaam be tedad
-        keys = base_data.keys()
-        for key in keys:
-            keys2 = base_data[key].keys()
-            for key2 in keys2:
-                base_data[key][key2] = str(float(base_data[key][key2]) / num_of_cities)
-
-        return Response({country_name.__str__(): base_data}, status=status.HTTP_200_OK)
+        return Response(result_data,status=status.HTTP_200_OK)
 
 
 class AverageCrimeAPIView(APIView):
@@ -313,25 +267,11 @@ class AverageCrimeAPIView(APIView):
         pass
 
     def post(self, request):
-        country_name = request.data['country']
-        country = models.Country.objects.get(name=country_name)
-        cities = models.City.objects.filter(country=country)
+        country_id = int(request.data["country_id"])
+        country = models.Country.objects.get(id=country_id)
+        result_data = ast.literal_eval(country.avg_crime)
 
-        # the data receiving process 
-        num_of_cities = len(cities)
-        base_data = ast.literal_eval(cities[0].crime)
-        for i in range(1, len(cities)):
-            main_city_dict = ast.literal_eval(cities[i].crime)
-            keys = main_city_dict.keys()
-            for key in keys:
-                base_data[key] = str(float(main_city_dict[key]) + float(base_data[key]))
-
-        # baraie taqsim kardane nataieje hasel jaam be tedad
-        keys = base_data.keys()
-        for key in keys:
-            base_data[key] = str(float(base_data[key]) / num_of_cities)
-
-        return Response({country_name.__str__(): base_data}, status=status.HTTP_200_OK)
+        return Response(result_data,status=status.HTTP_200_OK)
 
 
 class AverageHealthcareAPIView(APIView):
@@ -339,25 +279,11 @@ class AverageHealthcareAPIView(APIView):
         pass
 
     def post(self, request):
-        country_name = request.data['country']
-        country = models.Country.objects.get(name=country_name)
-        cities = models.City.objects.filter(country=country)
+        country_id = int(request.data["country_id"])
+        country = models.Country.objects.get(id=country_id)
+        result_data = ast.literal_eval(country.avg_health_care)
 
-        # the data receiving process 
-        num_of_cities = len(cities)
-        base_data = ast.literal_eval(cities[0].health_care)
-        for i in range(1, len(cities)):
-            main_city_dict = ast.literal_eval(cities[i].health_care)
-            keys = main_city_dict.keys()
-            for key in keys:
-                base_data[key] = str(float(main_city_dict[key]) + float(base_data[key]))
-
-        # baraie taqsim kardane nataieje hasel jaam be tedad
-        keys = base_data.keys()
-        for key in keys:
-            base_data[key] = str(float(base_data[key]) / num_of_cities)
-
-        return Response({country_name.__str__(): base_data}, status=status.HTTP_200_OK)
+        return Response(result_data,status=status.HTTP_200_OK)
 
 
 class AveragePollutionAPIView(APIView):
@@ -365,22 +291,26 @@ class AveragePollutionAPIView(APIView):
         pass
 
     def post(self, request):
-        country_name = request.data['country']
-        country = models.Country.objects.get(name=country_name)
-        cities = models.City.objects.filter(country=country)
+        country_id = int(request.data["country_id"])
+        country = models.Country.objects.get(id=country_id)
+        result_data = ast.literal_eval(country.avg_pollution)
 
-        # the data receiving process 
-        num_of_cities = len(cities)
-        base_data = ast.literal_eval(cities[0].pollution)
-        for i in range(1, len(cities)):
-            main_city_dict = ast.literal_eval(cities[i].pollution)
-            keys = main_city_dict.keys()
-            for key in keys:
-                base_data[key] = str(float(main_city_dict[key]) + float(base_data[key]))
+        return Response(result_data,status=status.HTTP_200_OK)
+        
 
-        # baraie taqsim kardane nataieje hasel jaam be tedad
-        keys = base_data.keys()
-        for key in keys:
-            base_data[key] = str(float(base_data[key]) / num_of_cities)
+class SearchCityAPIView(APIView):
+    def get(self,request):
+        input_data = request.query_params.get('search',None)
+        cities = models.City.objects.filter(name__startswith=input_data)
+        serializer = serializers.CityAbstractSerializer(cities,many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+    def post(self,reuqest):
+        pass
 
-        return Response({country_name.__str__(): base_data}, status=status.HTTP_200_OK)
+class AdvertismentAPIView(APIView):
+    def get(self,request):
+        ads = models.Advertisment.objects.all()
+        serializer = serializers.AdvertiseSerializer(ads,many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+    def post(self,request):
+        pass # this api post would not be needed cause it can be done by Django Admin

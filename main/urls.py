@@ -11,7 +11,10 @@ urlpatterns = [
     url(r'^city/health-care/$', views.HealthCareDataAPIView.as_view()),
     url(r'^city/pollution/$', views.PollutionDataAPIView.as_view()),
     url(r'^city/traffic/$', views.TrafficDataAPIView.as_view()),
+    
 
     url(r'^country/average/cost/$', views.AverageCostAPIView.as_view()),
+
+    url(r'^search/$', views.SearchCityAPIView.as_view()),
 
 ]
